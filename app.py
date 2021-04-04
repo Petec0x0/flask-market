@@ -7,6 +7,7 @@ Created on Wed Mar 31 21:02:08 2021
 """
 from market import app
 
+# check if the program is being run directly
 if __name__ == "__main__":
     app.run(debug=True)
 

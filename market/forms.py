@@ -18,13 +18,20 @@ class RegisterForm(FlaskForm):
         password_confirm = PasswordField(label='Confirm Password', validators=[EqualTo('password')])
         submit = SubmitField(label='Create Account')
         
+        # custom validation to check if username already exist
         def validate_username(self, username):
             user = User.query.filter_by(username=username.data).first()
             if user:
                 raise ValidationError('Username already exist.')
                 
-        
+        # custom validation to check if email address already exist
         def validate_email(self, email):
             user = User.query.filter_by(email=email.data).first()
             if user:
                 raise ValidationError('Email Address already exist.')
+                
+class LoginForm(FlaskForm):
+        username = StringField(label='Username', validators=[DataRequired(), Length(min=2, max=20)])
+        password = PasswordField(label='Password', validators=[Length(min=8), DataRequired()])
+        submit = SubmitField(label='Login')
+        
